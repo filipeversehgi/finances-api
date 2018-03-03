@@ -10,7 +10,7 @@ export const create = async (model) => {
     }
 
     // Encrypts password
-    model.password = bcrypt.hashSync(model.password, process.env.BCRYPT_SALT_NUMBER);
+    model.password = bcrypt.hashSync(model.password, Number(process.env.BCRYPT_SALT_NUMBER));
 
     console.dir(model);
 
@@ -31,5 +31,14 @@ export const login = async (model) => {
         throw "Invalid password";
     }
 
-    return { token: jwt.sign(model, process.env.JWT_SECRET) };
+    const tokenContent = {
+        email: user.email,
+        id: user.id
+    };
+
+    return { token: jwt.sign(tokenContent, process.env.JWT_SECRET) };
+};
+
+export const userId = (req) => {
+    return req.session.token.id;
 };

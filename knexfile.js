@@ -1,5 +1,4 @@
-import * as dotenv from "dotenv";
-dotenv.load();
+require("dotenv").load();
 // Update with your config settings.
 
 module.exports = {

@@ -10,7 +10,7 @@ exports.create = async (model) => {
         throw "User already exists";
     }
     // Encrypts password
-    model.password = bcrypt.hashSync(model.password, process.env.BCRYPT_SALT_NUMBER);
+    model.password = bcrypt.hashSync(model.password, Number(process.env.BCRYPT_SALT_NUMBER));
     console.dir(model);
     const createdUser = await User_1.User.query().insertAndFetch(model);
     return createdUser;
@@ -24,5 +24,12 @@ exports.login = async (model) => {
     if (!checkPassword) {
         throw "Invalid password";
     }
-    return { token: jwt.sign(model, process.env.JWT_SECRET) };
+    const tokenContent = {
+        email: user.email,
+        id: user.id
+    };
+    return { token: jwt.sign(tokenContent, process.env.JWT_SECRET) };
+};
+exports.userId = (req) => {
+    return req.session.token.id;
 };
