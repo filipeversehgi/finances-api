@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.load();
+
 import "./db";
 
 import * as express from "express";

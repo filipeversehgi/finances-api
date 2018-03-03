@@ -14,10 +14,10 @@ export const auth = async (req: Request, res: Response, next: NextFunction): Pro
     console.log(authHeaders);
 
     try {
-        const decoded = jwt.verify(authHeaders, "woeijoij424234d");
+        const decoded = jwt.verify(authHeaders, process.env.JWT_SECRET);
         console.dir(decoded);
         next();
     } catch (err) {
-        return res.status(403).json({ error: "No authorization present" });
+        return res.status(403).json({ error: "Invalid authorization" });
     }
 };

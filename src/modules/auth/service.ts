@@ -2,8 +2,6 @@ import { User } from "../../models/User";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
-const saltRounds = 5;
-
 export const create = async (model) => {
     // Checks if user already exists
     const user = await User.query().findOne({email: model.email});
@@ -12,7 +10,7 @@ export const create = async (model) => {
     }
 
     // Encrypts password
-    model.password = bcrypt.hashSync(model.password, saltRounds);
+    model.password = bcrypt.hashSync(model.password, process.env.BCRYPT_SALT_NUMBER);
 
     console.dir(model);
 
@@ -33,5 +31,5 @@ export const login = async (model) => {
         throw "Invalid password";
     }
 
-    return { token: jwt.sign(model, "woeijoij424234d") };
+    return { token: jwt.sign(model, process.env.JWT_SECRET) };
 };

@@ -6,11 +6,11 @@ const Model = Objection.Model;
 const knex = Knex({
     client: "pg",
     connection: {
-        host: "localhost",
-        port: "5432",
-        user: "root",
-        password: "default",
-        database: "finances-api"
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE
     },
     useNullAsDefault: true
 });
