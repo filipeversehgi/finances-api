@@ -20,41 +20,47 @@ gulp.task("lint", () =>
         .pipe(tslint.report())
 );
 
-gulp.task("build", ['lint'], function() {
+gulp.task("compile", ['lint'], function() {
+    console.log('Building...');
     return tsProject.src()
         .pipe(tsProject())
         .js.pipe(gulp.dest("dist"));
 });
 
-let watching = false;
-
-gulp.task("nodemon", ['build'], function () {
-    var options = {
-        watch: "./src",
-        script: "dist/server.js",
-        tasks: ['build']
-    }
-    let stream = nodemon(options);
-    stream.on('start', () => {
-        console.log('Nodemon started');
-
-        if(!watching){
-            gulp.watch('./src', ['build']);
-            watching = true;
-        }
-    }).on('restart', function () {
-        console.clear();
-    });
-    return stream;
+gulp.task("watch", () => {
+    gulp.watch('src/**/*.ts', ["compile"]);
 });
+
+gulp.task("serve", ["compile", "watch"], () => {
+    nodemon({
+        script: "dist/server.js",
+        env: { "NODE_ENV": "development" }
+    })
+        .on("restart", () => {
+            console.log("restarted");
+        })
+})
+
+// gulp.task("nodemon", ['compile'], function () {
+//     var options = {
+//         watch: "src/**/*.ts",
+//         script: "dist/server.js",
+//         tasks: ['compile'],
+//         exec: 'node --inspect=0.0.0.0:5858',
+//         stdout: true,
+//         delay: 5
+//     }
+//     let stream = nodemon(options);
+//     return stream;
+// });
 
 // gulp.task("watch", ['start'], function (cb){
 //     // return watch('src/**/*.ts', { ignoreInitial: false })
 //     //     .pipe(gulp.dest('lint'));
-//     gulp.watch(["src/**/*.ts"], ["lint", "build"])
+//     gulp.watch(["src/**/*.ts"], ["lint", "compile"])
 // });
 
 
-gulp.task("default", ['nodemon'], function () {
+gulp.task("default", ['serve'], function () {
 
 });
