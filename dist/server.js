@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require("./db");
 const express = require("express");
-const router_1 = require("./modules/router");
 const bodyParser = require("body-parser");
+const auth_1 = require("./middlewares/auth");
+const router_1 = require("./modules/router");
+const routes_1 = require("./modules/auth/routes");
 const app = express();
 app.use(bodyParser.json({ limit: "5mb" }));
+app.use("/auth/", routes_1.authRouter);
+app.use(auth_1.auth);
 app.use("/v1/", router_1.router);
 app.listen(3000, () => console.log("Example app listening on port 3000!"));

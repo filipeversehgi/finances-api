@@ -4,12 +4,6 @@ import * as jwt from "jsonwebtoken";
 
 const saltRounds = 5;
 
-export const listAll = async () => {
-    return await User.query()
-        .orderBy("email")
-        .select("*");
-};
-
 export const create = async (model) => {
     // Checks if user already exists
     const user = await User.query().findOne({email: model.email});
