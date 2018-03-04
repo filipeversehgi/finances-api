@@ -24,6 +24,7 @@
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.2.0",
     "knex": "^0.14.4",
+    "moment": "^2.21.0",
     "nodemon": "^1.17.1",
     "objection": "^1.0.0",
     "pg": "^7.4.1"

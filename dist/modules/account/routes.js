@@ -23,3 +23,21 @@ exports.accountRouter.get("/", async (req, res, next) => {
         next(err);
     }
 });
+exports.accountRouter.put("/", async (req, res, next) => {
+    try {
+        const account = await accountService.edit(authService.userId(req), req.body);
+        res.status(200).json(account);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.accountRouter.delete("/:id", async (req, res, next) => {
+    try {
+        const account = await accountService.destroy(authService.userId(req), req.params.id);
+        res.status(200).json(account);
+    }
+    catch (err) {
+        next(err);
+    }
+});

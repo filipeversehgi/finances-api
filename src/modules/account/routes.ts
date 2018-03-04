@@ -22,3 +22,21 @@ accountRouter.get("/", async (req: Request, res: Response, next: NextFunction) =
         next(err);
     }
 });
+
+accountRouter.put("/", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const account = await accountService.edit(authService.userId(req), req.body);
+        res.status(200).json(account);
+    } catch (err) {
+        next(err);
+    }
+});
+
+accountRouter.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const account = await accountService.destroy(authService.userId(req), req.params.id);
+        res.status(200).json(account);
+    } catch (err) {
+        next(err);
+    }
+});
