@@ -24,3 +24,21 @@ categoryRouter.post("/", async (req: Request, res: Response, next: NextFunction)
         next(err);
     }
 });
+
+categoryRouter.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const category = await categoryService.destroy(authService.userId(req), req.params.id);
+        res.status(200).json(category);
+    } catch (err) {
+        next(err);
+    }
+});
+
+categoryRouter.put("/", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const category = await categoryService.update(authService.userId(req), req.body);
+        res.status(200).json(category);
+    } catch (err) {
+        next(err);
+    }
+});

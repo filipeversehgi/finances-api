@@ -27,6 +27,7 @@ Category.relationMappings = {
     children: {
         relation: objection_1.Model.HasManyRelation,
         modelClass: Category,
+        filter: query => query.select("id", "name", "color"),
         join: {
             from: "category.id",
             to: "category.parent_id"

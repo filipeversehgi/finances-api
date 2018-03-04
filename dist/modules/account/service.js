@@ -13,8 +13,6 @@ exports.edit = async (userId, model) => {
     const modelId = model.id;
     delete model.id;
     model.updated_at = new Date().toISOString();
-    console.dir(model);
-    console.log(modelId);
     const account = await Account_1.Account
         .query()
         .patch(model)

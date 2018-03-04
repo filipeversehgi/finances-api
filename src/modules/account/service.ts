@@ -15,9 +15,6 @@ export const edit = async (userId, model) => {
     delete model.id;
     model.updated_at = new Date().toISOString();
 
-    console.dir(model);
-    console.log(modelId);
-
     const account = await Account
         .query()
         .patch(model)
