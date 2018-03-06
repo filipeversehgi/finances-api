@@ -1,12 +1,11 @@
 import { NextFunction, Request, Response, Router } from "express";
-import * as accountService from "./service";
-import * as authService from "../auth/service";
+import * as accountService from "../services/accountService";
+import * as authService from "../services/authService";
 
 export const accountRouter = Router({mergeParams: true});
 
 accountRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        req.body.user_id = authService.userId(req);
         const account = await accountService.create(req.body);
         res.status(200).json(account);
     } catch (err) {
@@ -16,7 +15,7 @@ accountRouter.post("/", async (req: Request, res: Response, next: NextFunction) 
 
 accountRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const accounts = await accountService.listAll(authService.userId(req));
+        const accounts = await accountService.listAll(req.token);
         res.status(200).json(accounts);
     } catch (err) {
         next(err);
@@ -25,7 +24,7 @@ accountRouter.get("/", async (req: Request, res: Response, next: NextFunction) =
 
 accountRouter.put("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const account = await accountService.edit(authService.userId(req), req.body);
+        const account = await accountService.edit(req.token, req.body);
         res.status(200).json(account);
     } catch (err) {
         next(err);
@@ -34,7 +33,7 @@ accountRouter.put("/", async (req: Request, res: Response, next: NextFunction) =
 
 accountRouter.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const account = await accountService.destroy(authService.userId(req), req.params.id);
+        const account = await accountService.destroy(req.token, req.params.id);
         res.status(200).json(account);
     } catch (err) {
         next(err);

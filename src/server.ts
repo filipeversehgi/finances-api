@@ -10,13 +10,12 @@ import * as session from "express-session";
 import { auth } from "./middlewares/auth";
 
 import { router } from "./modules/router";
-import { authRouter } from "./modules/auth/routes";
+import { authRouter } from "./modules/authRouter";
 
 const app = express();
 
 app.use(bodyParser.json({limit: "5mb"}));
 
-app.use(session({ secret: process.env.SESSION_SECRET, cookie: { maxAge: 60000 } }));
 app.use("/auth/", authRouter);
 
 app.use(auth);

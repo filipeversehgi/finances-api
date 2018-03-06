@@ -1,6 +1,7 @@
-import { User } from "../../models/User";
+import { User } from "../models/User";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import { ITokenUser } from "../interfaces/token";
 
 export const create = async (model) => {
     // Checks if user already exists
@@ -31,14 +32,10 @@ export const login = async (model) => {
         throw "Invalid password";
     }
 
-    const tokenContent = {
+    const tokenContent: ITokenUser = {
         email: user.email,
         id: user.id
     };
 
     return { token: jwt.sign(tokenContent, process.env.JWT_SECRET) };
-};
-
-export const userId = (req) => {
-    return req.session.token.id;
 };

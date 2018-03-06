@@ -1,10 +1,11 @@
-import { Category } from "../../models/Category";
+import { Category } from "../models/Category";
+import { ITokenUser } from "../interfaces/token";
 
-export const listAll = async (userId) => {
+export const listAll = async (token: ITokenUser) => {
     const categories = await Category
         .query()
         .select("id", "name", "color")
-        .where("user_id", "=", userId)
+        .where("user_id", "=", token.id)
         .whereNull("parent_id")
         .orderBy("name")
         .eager("children");
@@ -16,13 +17,13 @@ export const create = async (model) => {
     return category;
 };
 
-export const destroy = async (userId, id) => {
-    const category = await Category.query().delete().where("id", "=", id).andWhere("user_id", "=", userId);
+export const destroy = async (token: ITokenUser, id) => {
+    const category = await Category.query().delete().where("id", "=", id).andWhere("user_id", "=", token.id);
     if (category) { return category; }
     throw "Nothing was deleted";
 };
 
-export const update = async (userId, model) => {
+export const update = async (token: ITokenUser, model) => {
     const modelId = model.id;
     delete model.id;
     model.updated_at = new Date().toISOString();
@@ -35,13 +36,13 @@ export const update = async (userId, model) => {
     if (model.parent_id) {
         const parentCategory = await Category.query()
             .where("id", "=", model.parent_id)
-            .andWhere("user_id", "=", userId);
+            .andWhere("user_id", "=", token.id);
         console.dir(parentCategory);
         if (!parentCategory.length) {
             throw "Can't assign category to another user parent";
         }
     }
 
-    const category = await Category.query().patch(model).where("id", "=", modelId).andWhere("user_id", "=", userId).returning("*");
+    const category = await Category.query().patch(model).where("id", "=", modelId).andWhere("user_id", "=", token.id).returning("*");
     return category;
 };
