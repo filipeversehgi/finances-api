@@ -6,6 +6,7 @@ export const accountRouter = Router({mergeParams: true});
 
 accountRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
+        req.body.user_id = req.token.id;
         const account = await accountService.create(req.body);
         res.status(200).json(account);
     } catch (err) {

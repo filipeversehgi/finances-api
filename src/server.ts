@@ -9,8 +9,8 @@ import * as session from "express-session";
 
 import { auth } from "./middlewares/auth";
 
-import { router } from "./modules/router";
-import { authRouter } from "./modules/authRouter";
+import { router } from "./router";
+import { authRouter } from "./routes/auth";
 
 const app = express();
 
@@ -22,4 +22,10 @@ app.use(auth);
 
 app.use("/v1/", router);
 
+app.use((err, req, res, next) => {
+    res.status(500).json({error: err });
+});
+
 app.listen(3000, () => console.log("Example app listening on port 3000!"));
+
+module.exports = app;

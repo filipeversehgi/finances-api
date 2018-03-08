@@ -13,8 +13,6 @@ export const create = async (model) => {
     // Encrypts password
     model.password = bcrypt.hashSync(model.password, Number(process.env.BCRYPT_SALT_NUMBER));
 
-    console.dir(model);
-
     const createdUser = await User.query().insertAndFetch(model);
     return createdUser;
 
