@@ -16,6 +16,7 @@ export const edit = async (token: ITokenUser, model) => {
     delete model.id;
     model.updated_at = new Date().toISOString();
 
+    // CHAMAR REPOSITORY
     const account = await Account
         .query()
         .patch(model)

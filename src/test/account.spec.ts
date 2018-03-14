@@ -4,7 +4,7 @@ import "mocha";
 
 describe("List Categories", () => {
     it("should return hello world", () => {
-        const result = hello();
+        const result = category.listAll();
         expect(result).to.equal("Hello world!");
     });
 });
