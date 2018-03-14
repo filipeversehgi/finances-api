@@ -6,8 +6,11 @@ export const categoryRouter = Router({mergeParams: true});
 
 
 categoryRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
+    // CAMADA PRESENTATION
+    // Validar com JOI
     try {
         const categories = await categoryService.listAll(req.token);
+        // Adicionar o Formatter
         res.status(200).json(categories);
     } catch (err) {
         next(err);
