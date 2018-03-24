@@ -7,30 +7,59 @@ services:
     build: docker/dev
     environment:
       - NODE_ENV=development
-      - NODE_PORT=3001
+      - NODE_PORT=3000
       - DB_HOST=database
-      - DB_PORT=5432
+      - DB_PORT=5321
       - DB_USER=docker
       - DB_PASSWORD=1234
       - DB_DATABASE=finances
+      - DB_PORT_TEST=5430
+      - DB_DATABASE_TEST=finances_test
     env_file:
       - .env
     ports:
-      - "3001:3001"
+      - "3000:3000"
       - "5859:5859"
     volumes:
       - .:/src
     links:
       - database
+      - test_database
 
   database:
-    container_name: api-database
-    image: postgres:9.5-alpine
+    container_name: finances-db
+    image: postgres:10.3-alpine
     environment:
       - POSTGRES_DB=finances
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=1234
     volumes:
       - ./.data/postgresql:/var/lib/postgresql/data
+    command: -p 5321
     ports:
-      - "3002:5432"
+      - "5321:5321"
+  
+  test_database:
+    container_name: finances-db-test
+    image: postgres:10.3-alpine
+    environment:
+      - POSTGRES_DB=finances_test
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=1234
+    volumes:
+      - ./.data/postgresql_test:/var/lib/postgresql/data
+    command: -p 5430
+    ports:
+      - "5430:5430"
+
+  # database:
+  #   container_name: finances-db
+  #   image: postgres:9.6.2
+  #   volumes:
+  #     - ./.data/docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
+  #   environment:
+  #     - POSTGRES_MULTIPLE_DATABASES="finances","finances_test"
+  #     - POSTGRES_USER=docker
+  #     - POSTGRES_PASSWORD=1234
+  #   ports:
+  #     - "5432:5432"

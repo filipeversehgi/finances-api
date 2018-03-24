@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import * as authService from "../services/authService";
+import * as authService from "../../services/authService";
 
 export const authRouter = Router({mergeParams: true});
 

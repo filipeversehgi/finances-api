@@ -1,5 +1,5 @@
 import { User } from "../models/User";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { ITokenUser } from "../interfaces/token";
 
@@ -11,8 +11,9 @@ export const create = async (model) => {
     }
 
     // Encrypts password
-    model.password = bcrypt.hashSync(model.password, Number(process.env.BCRYPT_SALT_NUMBER));
+    model.password = bcrypt.hashSync(model.password, process.env.BCRYPT_SALT_NUMBER);
 
+    // Encrypted
     const createdUser = await User.query().insertAndFetch(model);
     return createdUser;
 

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 
-import { accountRouter } from "./accountRouter";
-import { categoryRouter } from "./categoryRouter";
+import { accountRouter } from "./routes/account";
+import { categoryRouter } from "./routes/category";
 
 export const router = Router({mergeParams: true});
 
