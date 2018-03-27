@@ -6,11 +6,10 @@ import * as db from "./db";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
-
 import { auth } from "./middlewares/auth";
-
 import { router } from "./router";
 import { authRouter } from "./routes/auth";
+import * as errors from "./middlewares/errors";
 
 db.connect();
 
@@ -28,10 +27,11 @@ app.use(auth);
 
 app.use("/v1/", router);
 
-app.use((err, req, res, next) => {
-    res.status(500).json({error: err });
-});
+app.use(errors.notFound);
+app.use(errors.parser);
 
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
+let port = process.env.NODE_ENV === "test" ? 4545 : 3000;
+
+app.listen(port, () => console.log("Example app listening on port " + port + "!"));
 
 module.exports = app;

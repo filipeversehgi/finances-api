@@ -17,3 +17,9 @@ export async function connectAndMigrate(): Promise<Knex> {
     console.log("KNEX: Database Migrated");
     return connection;
 }
+
+export async function truncateTables(): Promise<Knex> {
+    const connection = connect();
+    await connection.raw(`TRUNCATE accounts, categories, users;`);
+    return connection;
+}

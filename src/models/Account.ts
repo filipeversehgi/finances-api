@@ -10,7 +10,7 @@ export class Account extends Model {
     public updated_at: Date;
 
     static getTableName(): string {
-        return "account";
+        return "accounts";
     }
 
     static relationMappings = {

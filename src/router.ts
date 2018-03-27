@@ -11,4 +11,3 @@ router.use("/categories", categoryRouter);
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json("ok");
 });
-

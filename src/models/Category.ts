@@ -11,7 +11,7 @@ export class Category extends Model {
     public updated_at: Date;
 
     static getTableName(): string {
-        return "category";
+        return "categories";
     }
 
     static relationMappings = {

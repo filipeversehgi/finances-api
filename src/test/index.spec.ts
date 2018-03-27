@@ -1,33 +1,37 @@
 process.env.NODE_ENV = "test";
 
-import * as chaiAsPromised from "chai-as-promised";
 import * as db from "../db";
+import * as chai from "chai";
 import { expect, use } from "chai";
-
 import * as server from "../server";
-use(require("chai-http"));
 
+var chaiAsPromised = require("chai-as-promised");
+
+use(require("chai-http"));
 use(chaiAsPromised);
 
 describe("db", () => {
     it("should migrate postgres db", () => {
         return expect(db.connectAndMigrate()).to.be.eventually.fulfilled;
     });
+
+    it("should delete all database content", () => {
+        return expect(db.truncateTables()).to.be.eventually.fulfilled;
+    });
 });
 
 describe("API Routes", () => {
     it("Should not be able to login", (done) => {
         chai.request(server)
-        .post("/login")
+        .post("/auth/login")
         .send({
-            "_method": "create",
-            "username": "filipeversehgi@gmail.com",
-            "password": "123"
+            email: "filipeversehgi@gmail.com",
+            password: "123"
         })
         .end((err, res) => {
-            res.should.have.status(500);
-            res.body[0].should.have.property("error");
-            res.body[0].error.should.equal("Invalid password");
+            console.log(res.body);
+            expect(res.body).to.have.property("error");
+            expect(res.body.error).to.be.equal("User not found");
             done();
         });
     });

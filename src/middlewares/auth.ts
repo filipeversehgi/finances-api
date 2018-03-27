@@ -8,7 +8,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction): Pro
     }
 
     if (!req.headers.authorization) {
-        return res.status(403).json({ error: "No authorization present" });
+        res.status(401).json({ error: "No authorization present" });
+        return;
     }
 
     const authHeaders = req.headers.authorization;
@@ -18,6 +19,9 @@ export const auth = async (req: Request, res: Response, next: NextFunction): Pro
         req.token = decoded;
         next();
     } catch (err) {
-        return res.status(403).json({ error: "Invalid authorization" });
+        res.status(401).json({ error: "Invalid authorization" });
+        return;
     }
+
+    next();
 };

@@ -2,6 +2,7 @@ import { User } from "../models/User";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { ITokenUser } from "../interfaces/token";
+import validationError from "./validationError";
 
 export const create = async (model) => {
     // Checks if user already exists
@@ -22,13 +23,13 @@ export const create = async (model) => {
 export const login = async (model) => {
     const user = await User.query().findOne({email: model.email});
     if (!user) {
-        throw "User not found";
+        throw validationError(400, "User not found");
     }
 
     const checkPassword = bcrypt.compareSync(model.password, user.password);
 
     if (!checkPassword) {
-        throw "Invalid password";
+        throw validationError(401, "Invalid password");
     }
 
     const tokenContent: ITokenUser = {

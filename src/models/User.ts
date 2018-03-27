@@ -10,6 +10,6 @@ export class User extends Model {
     public updated_at: Date;
 
     static getTableName(): string {
-        return "user";
+        return "users";
     }
 }
