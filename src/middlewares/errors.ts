@@ -6,10 +6,8 @@ export function notFound(req: Request, res: Response, next: NextFunction): any {
 }
 
 export function parser(err: any, req: Request, res: Response, next: NextFunction): any {
-    console.log(err);
-
     if (err.validationError) {
-        if (isDevelopment) {
+        if (isDevelopment()) {
             console.log(req.body);
             console.log(err.message);
         }

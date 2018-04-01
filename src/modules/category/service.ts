@@ -1,5 +1,5 @@
-import { Category } from "../models/Category";
-import { ITokenUser } from "../interfaces/token";
+import { Category } from "../../models/Category";
+import { ITokenUser } from "../../interfaces/token";
 
 export const listAll = async (token: ITokenUser) => {
     const categories = await Category

@@ -1,5 +1,5 @@
-import { Account } from "../models/Account";
-import { ITokenUser } from "../interfaces/token";
+import { Account } from "../../models/Account";
+import { ITokenUser } from "../../interfaces/token";
 
 export const create = async (model) => {
     const createdAccount = await Account.query().insertAndFetch(model);

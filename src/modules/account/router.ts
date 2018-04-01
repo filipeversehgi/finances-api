@@ -1,12 +1,11 @@
 import { NextFunction, Request, Response, Router } from "express";
-import * as accountService from "../../services/accountService";
-import * as authService from "../../services/authService";
+import * as accountService from "./service";
 
 export const accountRouter = Router({mergeParams: true});
 
 accountRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        req.body.user_id = req.token.id;
+        //req.body.user_id = req.token.id;
         const account = await accountService.create(req.body);
         res.status(200).json(account);
     } catch (err) {

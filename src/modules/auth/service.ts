@@ -1,8 +1,8 @@
-import { User } from "../models/User";
+import { User } from "../../models/User";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { ITokenUser } from "../interfaces/token";
-import validationError from "./validationError";
+import { ITokenUser } from "../../interfaces/token";
+import validationError from "../../functions/validationError";
 
 export const create = async (model) => {
     // Checks if user already exists
@@ -12,10 +12,11 @@ export const create = async (model) => {
     }
 
     // Encrypts password
-    model.password = bcrypt.hashSync(model.password, process.env.BCRYPT_SALT_NUMBER);
+    model.password = bcrypt.hashSync(model.password, Number(process.env.BCRYPT_SALT_NUMBER));
 
     // Encrypted
     const createdUser = await User.query().insertAndFetch(model);
+    delete createdUser.password;
     return createdUser;
 
 };

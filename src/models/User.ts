@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import * as Joi from "joi";
 
 export class User extends Model {
     public id: number;
@@ -13,3 +14,8 @@ export class User extends Model {
         return "users";
     }
 }
+
+export const userSchema = Joi.object().keys({
+    email: Joi.string().email().required().label("email"),
+    password: Joi.string().required().label("password")
+});

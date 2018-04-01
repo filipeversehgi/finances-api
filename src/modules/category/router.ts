@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
-import * as categoryService from "../../services/categoryService";
-import * as authService from "../../services/authService";
+import * as categoryService from "./service";
+import * as authService from "../../modules/auth/service";
 
 export const categoryRouter = Router({mergeParams: true});
 
