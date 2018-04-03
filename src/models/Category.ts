@@ -19,16 +19,16 @@ export class Category extends Model {
             relation: Model.BelongsToOneRelation,
             modelClass: User,
             join: {
-                from: "category.user_id",
-                to: "user.id"
+                from: "categories.user_id",
+                to: "users.id"
             }
         },
         parent: {
             relation: Model.BelongsToOneRelation,
             modelClass: Category,
             join: {
-                from: "category.parent_id",
-                to: "category.id"
+                from: "categories.parent_id",
+                to: "categories.id"
             }
         },
         children: {

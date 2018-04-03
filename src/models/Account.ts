@@ -1,5 +1,6 @@
 import { Model } from "objection";
 import { User } from "./User";
+import * as Joi from "joi";
 
 export class Account extends Model {
     public id: number;
@@ -18,9 +19,15 @@ export class Account extends Model {
             relation: Model.BelongsToOneRelation,
             modelClass: User,
             join: {
-                from: "account.user_id",
-                to: "user.id"
+                from: "accounts.user_id",
+                to: "users.id"
             }
         }
     };
 }
+
+export const accountSchema = Joi.object().keys({
+    user_id: Joi.number().required().label("user_id"),
+    name: Joi.string().required().label("name"),
+    type: Joi.string().required().valid("savings", "checking").label("type")
+});

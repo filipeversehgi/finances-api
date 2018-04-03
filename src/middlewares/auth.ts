@@ -7,20 +7,24 @@ export const auth = async (req: Request, res: Response, next: NextFunction): Pro
         return next();
     }
 
+    if (!req.headers.authorization) {
+        res.status(401).json({ error: "No authorization present" });
+        return;
+    }
+
     try {
         const token = req.get("Authorization");
         if (!token) {
-            throw "";
+            throw "Invalid Authorizaton";
         }
         req.token = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+        res.status(401).json({ error: "Invalid authorization" });
+        return;
     } finally {
         next();
     }
 
-    // if (!req.headers.authorization) {
-    //     res.status(401).json({ error: "No authorization present" });
-    //     return;
-    // }
 
     // const authHeaders = req.headers.authorization;
 

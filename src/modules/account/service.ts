@@ -1,5 +1,6 @@
 import { Account } from "../../models/Account";
 import { ITokenUser } from "../../interfaces/token";
+import validationError from "../../functions/validationError";
 
 export const create = async (model) => {
     const createdAccount = await Account.query().insertAndFetch(model);
@@ -14,6 +15,7 @@ export const listAll = async (token: ITokenUser) => {
 export const edit = async (token: ITokenUser, model) => {
     const modelId = model.id;
     delete model.id;
+    delete model.user_id;
     model.updated_at = new Date().toISOString();
 
     // CHAMAR REPOSITORY
@@ -23,7 +25,7 @@ export const edit = async (token: ITokenUser, model) => {
         .where("id", "=", modelId)
         .andWhere("user_id", "=", token.id)
         .returning("*");
-    return account;
+    return account[0];
 };
 
 export const destroy = async (token: ITokenUser, modelId) => {
@@ -39,7 +41,7 @@ export const destroy = async (token: ITokenUser, modelId) => {
 
         if (account) { return account; }
 
-        throw "Nothing was deleted";
+        throw validationError(400, "Nothing was deleted");
     }
-    throw "Invalid Account Id";
+    throw validationError(400, "Invalid account i");
 };
