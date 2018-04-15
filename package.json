@@ -36,7 +36,7 @@
     "express-session": "^1.15.6",
     "joi": "^13.1.2",
     "jsonwebtoken": "^8.2.0",
-    "knex": "^0.14.4",
+    "knex": "^0.14.6",
     "moment": "^2.21.0",
     "nodemon": "^1.17.1",
     "objection": "^1.0.0",

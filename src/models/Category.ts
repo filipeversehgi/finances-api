@@ -1,5 +1,6 @@
 import { Model } from "objection";
 import { User } from "./User";
+import * as Joi from "joi";
 
 export class Category extends Model {
     public id: number;
@@ -36,9 +37,16 @@ export class Category extends Model {
             modelClass: Category,
             filter: query => query.select("id", "name", "color"),
             join: {
-                from: "category.id",
-                to: "category.parent_id"
+                from: "categories.id",
+                to: "categories.parent_id"
             }
         }
     };
 }
+
+export const categorySchema = Joi.object().keys({
+    user_id: Joi.number().required().label("user_id"),
+    name: Joi.string().required().label("name"),
+    color: Joi.string().optional().label("color"),
+    parent_id: Joi.number().optional().label("parent_id")
+});
