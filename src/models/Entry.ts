@@ -8,9 +8,11 @@ export class Entry extends Model {
     public id: number;
 
     public user_id: number;
-    public parent_id: number;
     public account_id: number;
     public category_id: number;
+
+    public group_hash: number;
+    public group_order: number;
 
     public description: string;
     public amount: number;
@@ -50,23 +52,6 @@ export class Entry extends Model {
             join: {
                 from: "entries.account_id",
                 to: "accounts.id"
-            }
-        },
-        parent: {
-            relation: Model.BelongsToOneRelation,
-            modelClass: Entry,
-            join: {
-                from: "entries.parent_id",
-                to: "entries.id"
-            }
-        },
-        children: {
-            relation: Model.HasManyRelation,
-            modelClass: Entry,
-            filter: query => query.select("id", "description", "value"),
-            join: {
-                from: "entries.id",
-                to: "entries.parent_id"
             }
         }
     };

@@ -4,9 +4,11 @@ exports.up = function(knex, Promise) {
         t.increments("id").primary();
 
         t.integer("user_id").notNullable();
-        t.integer("parent_id").notNullable();
         t.integer("account_id").notNullable();
         t.integer("category_id").notNullable();
+
+        t.string("group_hash");
+        t.integer("group_order");
 
         t.string("description").notNullable();
         t.decimal("amount", 14, 2).notNullable();
@@ -22,7 +24,6 @@ exports.up = function(knex, Promise) {
         t.foreign("user_id").references("id").inTable("users");
         t.foreign("account_id").references("id").inTable("accounts");
         t.foreign("category_id").references("id").inTable("categories");
-        t.foreign("parent_id").references("id").inTable("entries");
 
         t.timestamps(false, true);
     })
