@@ -15,7 +15,8 @@ export class Entry extends Model {
     public group_order: number;
 
     public description: string;
-    public amount: number;
+    public income: number;
+    public outcome: number;
     public date: Date;
     public type: string;
     public observation: string;
@@ -57,9 +58,20 @@ export class Entry extends Model {
     };
 }
 
-export const categorySchema = Joi.object().keys({
-    user_id: Joi.number().required().label("user_id"),
-    name: Joi.string().required().label("name"),
-    color: Joi.string().optional().label("color"),
-    parent_id: Joi.number().optional().label("parent_id")
+export const newEntrySchema = Joi.object().keys({
+    user_id: Joi.number().required(),
+    account_id: Joi.number().required(),
+    category_id: Joi.number().required(),
+
+    //group_hash: Joi.string().required(),
+    //  group_order: Joi.number().required(),
+
+    description: Joi.string().required(),
+    income: Joi.number().required(),
+    outcome: Joi.number().required(),
+    date: Joi.date().required(),
+    //type: Joi.string().valid("input", "output", "transfer").required(),
+    observation: Joi.string().optional(),
+    repeat: Joi.string().valid("fixed", "installments").optional(),
+    installments: Joi.number().optional()
 });

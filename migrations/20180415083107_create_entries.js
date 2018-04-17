@@ -11,10 +11,11 @@ exports.up = function(knex, Promise) {
         t.integer("group_order");
 
         t.string("description").notNullable();
-        t.decimal("amount", 14, 2).notNullable();
+        t.decimal("income", 14, 2).notNullable();
+        t.decimal("outcome", 14, 2).notNullable();
         t.date("date").notNullable();
 
-        t.enu("type", ["input", "output", "transfer"]).notNullable();
+        //t.enu("type", ["input", "output", "transfer"]).notNullable();
 
         t.string("observation");
 
