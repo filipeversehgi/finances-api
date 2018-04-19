@@ -21,6 +21,10 @@ exports.up = function(knex, Promise) {
 
         t.enu("repeat", ["fixed", "installments"]);
         t.integer("installments");
+        t.enu("period", ["day", "week", "month", "year"]);
+        t.integer("period_size");
+
+        t.boolean("is_paid").defaultTo(false);
 
         t.foreign("user_id").references("id").inTable("users");
         t.foreign("account_id").references("id").inTable("accounts");

@@ -36,3 +36,21 @@ entryRouter.post("/", async (req: Request, res: Response, next: NextFunction) =>
         next(err);
     }
 });
+
+entryRouter.put("/", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const account = await entryService.update(req.token, req.body);
+        res.status(200).json(account);
+    } catch (err) {
+        next(err);
+    }
+});
+
+entryRouter.delete("/:id/:action?", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await entryService.destroy(req.token, req.params.id, req.params.action);
+        res.status(200).json(result);
+    } catch (err) {
+        next(err);
+    }
+})

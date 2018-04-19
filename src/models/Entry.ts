@@ -23,6 +23,10 @@ export class Entry extends Model {
     public repeat: string;
     public installments: number;
 
+    public period: string;
+    public period_size: number;
+    public is_paid: boolean;
+
     public created_at: Date;
     public updated_at: Date;
 
@@ -73,5 +77,8 @@ export const newEntrySchema = Joi.object().keys({
     //type: Joi.string().valid("input", "output", "transfer").required(),
     observation: Joi.string().optional(),
     repeat: Joi.string().valid("fixed", "installments").optional(),
-    installments: Joi.number().optional()
+    installments: Joi.number().optional(),
+    period: Joi.string().valid("day", "month", "week", "year").optional(),
+    period_size: Joi.number().optional(),
+    is_paid: Joi.boolean().optional()
 });
