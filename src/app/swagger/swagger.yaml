@@ -1,0 +1,50 @@
+basePath: /
+definitions:
+    IUserCreationRequest:
+        description: ""
+        properties:
+            email:
+                type: string
+                description: ""
+            password:
+                type: string
+                description: ""
+        type: object
+        required:
+            - email
+            - password
+info:
+    description: 'OpenSource Finances Management Api'
+    license:
+        name: ISC
+    title: 'Finance API'
+    version: 1
+paths:
+    /auth/:
+        post:
+            operationId: AuthCreateUser
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Ok
+                    schema:
+                        type: object
+            description: 'Creates a new User'
+            consumes:
+                - application/json
+            parameters:
+                -
+                    description: ""
+                    in: body
+                    name: user
+                    required: true
+                    schema:
+                        $ref: '#/definitions/IUserCreationRequest'
+swagger: '2.0'
+securityDefinitions:
+    authorization:
+        type: apiKey
+        in: header
+        name: Authorization
+host: 'localhost:3000'

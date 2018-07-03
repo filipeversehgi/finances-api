@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
+        "experimentalDecorators": true,
+        "allowJs": true,
         "target": "es2017",
         "module": "commonjs",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
         "noEmitOnError": true,

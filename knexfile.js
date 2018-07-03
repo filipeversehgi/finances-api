@@ -1,4 +1,5 @@
 require("dotenv").load();
+console.log(process.env.DB_HOST);
 // Update with your config settings.
 
 module.exports = {
@@ -16,7 +17,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: "admin_schema_version"
+      tableName: "admin_schema_version",
+      directory: "./src/infra/database/migrations"
     }
   },
   development: {
@@ -33,7 +35,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: "admin_schema_version"
+      tableName: "admin_schema_version",
+      directory: "./src/infra/database/migrations"
     }
   }
 };

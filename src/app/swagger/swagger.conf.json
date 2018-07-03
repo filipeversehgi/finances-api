@@ -1,0 +1,17 @@
+{
+    "swagger": {
+        "outputDirectory": "./src/app/swagger",
+        "entryFile": "./src/server.ts",
+        "host": "localhost:3000",
+        "version": 1.0,
+        "name": "Finance API",
+        "basePath": "/",
+        "securityDefinitions": {
+            "authorization": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization"
+            }
+        }
+    }
+}
